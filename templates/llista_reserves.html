@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+  <nav
+  class="relative flex w-full flex-wrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4">
+  <div class="flex w-full flex-wrap items-center justify-between px-3">
+    <div>
+      <a
+        class="mx-2 my-1 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 lg:mb-0 lg:mt-0"
+        href="#">
+        <img
+          class="mr-2"
+          src="../static/logo.png"
+          style="height: 20px"
+          alt="TE Logo"
+          loading="lazy" />
+        <span class="font-medium dark:text-neutral-200"
+          >Desenvolupament web en entorn servidor - Pràctica 3, curs 23/24</span>
+      </a>
+    </div>
+  </div>
+</nav>  
+
+{% include 'menu.html' %}
+  
+  <div class="flex flex-col items-center">
+    <!-- INTRO -->
+    <span class="text-sm text-gray-700 dark:text-gray-400">
+        Mostrant reserves del <span class="font-semibold text-gray-900 dark:text-black">{{date_range[0]}}</span> al <span class="font-semibold text-gray-900 dark:text-black">{{date_range[6]}}</span> 
+    </span>
+    
+     <!--BOTONES SEMANA ANTES Y DESPUES-->
+    <div class="inline-flex mt-2 xs:mt-0">
+      <button  value="-1" class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+          </svg>
+          Prev
+      </button>
+      <button value="1" class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          Next
+          <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                  Carro
+              </th>
+              
+              <th scope="col" class="px-6 py-3">
+                 {{date_range[0]}}
+              </th>
+              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                {{date_range[1]}}
+              </th>
+              <th scope="col" class="px-6 py-3">
+                {{date_range[2]}}
+              </th>
+              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                {{date_range[3]}}
+              </th>
+              <th scope="col" class="px-6 py-3">
+                {{date_range[4]}}
+              </th>
+              <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                {{date_range[5]}}
+              </th>
+            <th scope="col" class="px-6 py-3">
+              {{date_range[6]}}
+            </th>
+          </tr>
+      </thead>
+
+      <ul>
+        {% for reserva in reservas %}
+        <tr class="border-b border-gray-200 dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+            {{ reserva.nom }}
+          </th>
+
+          {% for date in date_range %}
+            <td class="px-6 py-4">
+              {% if reserva.iniciReserva and reserva.iniciReserva.date() <= date and reserva.finalReserva.date() >= date %}
+                {{ reserva.usuario }}
+              {% endif %}
+            </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </ul>
+            
+
+
+  </table>
+</div>
+
+</body>
+</html>
